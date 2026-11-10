@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f7f9" />
+  <meta name="description" content="An anonymous student decision-making questionnaire for a school psychology study." />
+  <title>Student Decision Study</title>
+  <style>
+:root {
+  color-scheme: light;
+  --ink: #13233a;
+  --muted: #687788;
+  --line: #dde4ec;
+  --canvas: #f5f7fa;
+  --card: #fff;
+  --navy: #172e51;
+  --accent: #2563ab;
+  --accent-light: #e9f2ff;
+  --mint: #dbece8;
+  --mint-ink: #22554b;
+  --red: #a52e44;
+  --radius: 18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.62}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #83b8ff;outline-offset:3px}
+a{color:var(--accent)}
+.site-shell{min-height:100vh;display:flex;flex-direction:column}
+.site-header{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);background:#fff;padding:20px max(28px,calc((100vw - 1050px)/2));min-height:80px}
+.wordmark{display:flex;align-items:center;gap:13px;font-size:12px;letter-spacing:.10em;font-weight:820;color:var(--navy)}
+.wordmark small{font-weight:600;letter-spacing:.075em;color:#7a8797}
+.brand-symbol{width:30px;height:30px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center;gap:3px;transform:rotate(-2deg)}
+.brand-symbol span{width:4px;border-radius:3px;background:#d7e7f9;height:11px}
+.brand-symbol span:nth-child(2){height:19px;background:#a8dbc9}
+.brand-symbol span:nth-child(3){height:15px}
+.header-meta{font-size:12px;font-weight:700;color:#8a97a6;letter-spacing:.08em;text-transform:uppercase}
+.main-container{width:min(100% - 36px,780px);margin:56px auto 70px;flex:1}
+.site-footer{display:flex;gap:14px;justify-content:space-between;border-top:1px solid var(--line);padding:23px max(28px,calc((100vw - 1050px)/2));font-size:12px;color:#83909f}
+.page-card{background:#fff;border:1px solid #e6ebf0;border-radius:var(--radius);box-shadow:0 14px 45px rgba(27,46,77,.055);padding:48px 54px}
+.eyebrow{color:#477196;text-transform:uppercase;letter-spacing:.135em;font-size:11px;font-weight:800;margin:0 0 15px}
+.h1{font-size:clamp(30px,4.4vw,43px);line-height:1.13;letter-spacing:-.04em;margin:0 0 18px;color:#192c45;font-weight:730}
+.h2{font-size:clamp(25px,3.4vw,34px);line-height:1.18;letter-spacing:-.028em;margin:0 0 24px;font-weight:720}
+.lede{font-size:17px;color:#516275;line-height:1.72;margin:0 0 30px}
+.body-copy p{margin:0 0 18px;color:#37485b;font-size:15px;line-height:1.77}
+.body-copy p:last-child{margin-bottom:0}
+.intro-stat-row{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0}
+.intro-stat{border:1px solid #e5e9ef;border-radius:12px;padding:14px 17px;flex:1;min-width:120px;background:#fbfcfe}
+.intro-stat strong{display:block;color:var(--ink);font-size:15px}
+.intro-stat small{display:block;color:#8a95a3;font-size:12px;margin-top:2px}
+.notice{border:1px solid #dbe7ef;background:#f4f9fb;border-radius:12px;padding:18px 19px;color:#45576a;font-size:14px;margin:26px 0}
+.notice strong{display:block;margin-bottom:5px;color:#213d55;font-size:14px}
+.consent-check{display:flex;gap:13px;align-items:flex-start;font-size:14px;line-height:1.5;color:#425368;background:#fff;border:1px solid var(--line);padding:17px;border-radius:12px;cursor:pointer;margin:25px 0}
+.consent-check input{width:19px;height:19px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:30px;flex-wrap:wrap}
+.btn{background:var(--navy);border:1px solid var(--navy);color:white;font-weight:700;font-size:14px;min-height:48px;padding:12px 23px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,border .15s,transform .1s}
+.btn:hover:not(:disabled){background:#24446e;transform:translateY(-1px)}
+.btn:disabled{cursor:not-allowed;opacity:.42;transform:none}
+.btn.ghost{color:#445d73;border:1px solid #cfd9e4;background:white}
+.btn.ghost:hover:not(:disabled){background:#f6f9fc}
+.link-button{border:0;background:none;color:#768497;font-size:13px;text-decoration:underline;padding:7px 0}
+.progress-head{margin-bottom:30px}
+.progress-row{display:flex;justify-content:space-between;gap:12px;align-items:center;color:#7890a5;font-size:12px;font-weight:720;letter-spacing:.065em;text-transform:uppercase;margin-bottom:13px}
+.progress-track{height:6px;border-radius:999px;background:#e9eef4;overflow:hidden}
+.progress-fill{height:100%;border-radius:999px;background:#3c78b2;transition:width .3s ease}
+.question-title{font-size:clamp(26px,3.5vw,35px);line-height:1.19;letter-spacing:-.03em;color:#1c2f49;margin:0 0 24px}
+.prompt{font-size:15px;font-weight:760;color:#1a3659;margin:27px 0 17px}
+.option-list{display:grid;gap:12px}
+.option{display:flex;align-items:flex-start;text-align:left;gap:15px;border:1.5px solid #dce4eb;background:#fff;color:#344b63;padding:18px 20px;border-radius:13px;min-height:80px;width:100%;line-height:1.62;transition:background .14s,border-color .14s,box-shadow .14s}
+.option:hover:not(:disabled){border-color:#91b3d5;background:#f8fbff}
+.option.selected{border-color:#3e78b4;background:#eff6ff;box-shadow:0 0 0 2px #d9eaff inset}
+.option-key{flex:none;width:35px;height:35px;border-radius:9px;background:#f1f4f8;color:#476481;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;margin-top:1px}
+.option.selected .option-key{background:#245d97;color:#fff}
+.option-text{font-size:14px;line-height:1.66;padding-top:2px}
+.mini-note{color:#8a96a4;font-size:12px;margin-top:14px}
+.error-message{border-radius:9px;background:#fff0f0;color:#9b2837;border:1px solid #ffd4d9;padding:12px 14px;font-size:13px;margin-top:17px}
+.success-icon{width:52px;height:52px;background:var(--mint);color:var(--mint-ink);display:flex;align-items:center;justify-content:center;border-radius:15px;font-size:26px;font-weight:700;margin-bottom:22px}
+.preview-banner{background:#fff3dc;border:1px solid #eed39b;border-radius:11px;padding:13px 16px;font-size:13px;color:#7a5422;margin-bottom:20px}
+.research-main{width:min(100% - 38px,1160px);margin:42px auto 72px;flex:1}
+.research-banner{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin:0 0 25px}
+.research-banner h1{font-size:clamp(28px,4vw,37px);margin:0 0 6px;letter-spacing:-.03em}
+.research-banner p{margin:0;color:#697b8d;font-size:14px}
+.login-card{max-width:500px;margin:65px auto;background:white;padding:42px;border:1px solid var(--line);border-radius:18px;box-shadow:0 15px 45px #1830500a}
+.field{width:100%;border-radius:10px;border:1px solid #ccd6e1;padding:12px 14px;background:#fff;margin:9px 0 12px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.metric{background:#fff;border:1px solid #e3e8ef;border-radius:15px;padding:22px}
+.metric-label{font-size:12px;font-weight:700;color:#7b8a9c;margin-bottom:7px}
+.metric-value{font-size:33px;letter-spacing:-.03em;line-height:1.1;font-weight:740}
+.metric-help{font-size:11px;color:#94a0ac;margin-top:9px}
+.research-panel{background:#fff;border:1px solid #e2e9f1;padding:24px;border-radius:16px;margin-top:18px}
+.panel-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.panel-top h2{font-size:18px;margin:0}
+.panel-top small{color:#7c8998}
+.table-wrap{overflow-x:auto;margin-top:14px}
+.data-table{border-collapse:collapse;width:100%;min-width:820px;font-size:12px}
+.data-table th{text-align:left;color:#718197;font-weight:730;background:#f7f9fb;border-bottom:1px solid #dce5ef;padding:12px 9px;white-space:nowrap}
+.data-table td{border-bottom:1px solid #eef1f5;padding:12px 9px;white-space:nowrap;color:#35475c}
+.data-table tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:11px;background:#eef3f8;color:#516b86;font-weight:700}
+.pill.good{background:#e3f2e8;color:#26704c}
+.pill.warn{background:#fff0df;color:#946021}
+.data-note{font-size:12px;color:#78889a}
+@media (max-width:680px){
+ .site-header{padding:16px 20px;min-height:68px}
+ .header-meta{display:none}
+ .main-container{width:min(100% - 22px,780px);margin:20px auto 40px}
+ .page-card{padding:28px 22px;border-radius:14px}
+ .site-footer{padding:18px 22px;flex-direction:column;gap:1px}
+ .intro-stat-row{gap:8px}
+ .option{padding:15px 13px;gap:12px}
+ .option-text{font-size:13px}
+ .actions{gap:9px}
+ .btn{width:100%}
+ .research-main{margin-top:20px;width:min(100% - 20px,1160px)}
+ .research-banner{flex-direction:column}
+ .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .metric{padding:15px}
+ .research-panel .metrics{grid-template-columns:1fr!important}
+ .research-panel{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  </style>
+  <script>window.EXPERIMENT_PREVIEW = true;</script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="wordmark"><div class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></div><span>STUDENT RESEARCH <small>/ PSYCHOLOGY</small></span></div>
+      <div class="header-meta">SAS · Decision Study</div>
+    </header>
+    <main id="app" class="main-container" aria-live="polite">
+      <div class="page-card"><div class="loading-skeleton">Preparing your questionnaire…</div></div>
+    </main>
+    <footer class="site-footer"><span>Anonymous school research questionnaire</span><span>No names or student emails requested</span></footer>
+  </div>
+  <script>
+// Source: Psych experiment.pdf, questionnaire versions on pages 3–4,
+// five distraction passages on pages 5–7. Field trip numbers adjusted
+// at user request: 400 students, 100 attending / 300 missing, 1/4 vs 3/4.
+const scenario1 = {
+  title: 'School Field Trip',
+  paragraphs: [
+    'A local school has organized a field trip to Sentosa for 400 high school students. The trip has been planned for several weeks, and students have already signed up and received permission to attend.',
+    'However, just a few days before the trip, the bus company informs the school that there has been a problem with the transportation booking. Because of this, all 400 students are now at risk of missing the trip.',
+    'The school has come up with two possible solutions, but it can only choose one.'
+  ],
+  positive: {
+    A: '100 students will definitely be able to go on the trip.',
+    B: 'There is a 1/4 chance that all 400 students will be able to go, but a 3/4 chance that no students will be able to go.'
+  },
+  negative: {
+    A: '300 students will definitely miss the trip.',
+    B: 'There is a 1/4 chance that no students will miss the trip, but a 3/4 chance that all 400 students will miss the trip.'
+  }
+};
+
+const scenario2 = {
+  title: 'School Concert',
+  paragraphs: [
+    'The high school has arranged for 600 high school students to attend a concert at the Esplanade in Singapore. Many students have been looking forward to the event, and the school has already made arrangements for everyone to attend.',
+    'However, the event organizer contacts the school to explain that there has been a mistake with the ticket reservations. As a result, all 600 students are now at risk of losing their tickets.',
+    'The organizer offers the school two possible solutions, but only one can be chosen.'
+  ],
+  positive: {
+    A: '200 students will definitely get to attend the concert.',
+    B: 'There is a 1/3 chance that all 600 students will get to attend, but a 2/3 chance that no students will get to attend.'
+  },
+  negative: {
+    A: '400 students will definitely not be able to attend the concert.',
+    B: 'There is a 1/3 chance that no students will lose their tickets, but a 2/3 chance that all 600 students will lose their tickets.'
+  }
+};
+
+const distractions = [
+  {
+    title: 'School Cafeteria',
+    paragraphs: [
+      "A local school is planning to make some changes to the high school cafeteria to improve students' lunchtime experience. Recently, students have mentioned that the cafeteria can get crowded, especially during the busiest lunch periods. Some students have also suggested that having more food options would make lunchtime more enjoyable.",
+      'To address these concerns, the school is considering two possible improvements. However, due to budget and space limitations, only one option can be implemented this semester.',
+      'The first proposal focuses on reducing waiting times by adding more food service stations. The second proposal focuses on increasing the variety of meals available to students. Both proposals have received positive feedback from students, but the school wants to understand which improvement students would prefer before making a final decision.'
+    ],
+    prompt: 'Which option would you prefer?',
+    options: {
+      A: 'Add 3 new food stations. It may reduce the average lunchtime waiting time from 15 minutes to 8 minutes.',
+      B: 'Add 12 new meal options to the cafeteria menu, increasing the total number of available meals from 18 to 30.'
+    }
+  },
+  {
+    title: 'City Council Development',
+    paragraphs: [
+      "A city council is holding a meeting to discuss how to improve the city's environment and quality of life. Over the past decade, the city has experienced rapid industrial growth, leading to increased air pollution, traffic congestion, and a shortage of green spaces. Many residents have raised concerns about these issues, while others believe that industrial development is important for providing jobs and supporting the local economy.",
+      'The city council has been given funding to introduce a new development plan over the next five years. During the meeting, council members proposed two different approaches. One focuses on reducing industrial activity to improve environmental conditions, while the other focuses on developing new public facilities and green spaces without directly reducing industrial activity. Due to budget limitations, the council can only approve one proposal.'
+    ],
+    prompt: 'Select one of the following programs that you would prefer as a city council member.',
+    options: {
+      A: "Remove 50% of the city's industrial facilities and convert 200 hectares of industrial land into green spaces and public parks.",
+      B: 'Introduce 1,000 new trees, build 15 public parks, and create 25 kilometers of cycling paths throughout the city.'
+    }
+  },
+  {
+    title: 'Village Agriculture',
+    paragraphs: [
+      "A village located in a rural area of South Africa has recently experienced a severe drought, causing a substantial decrease in wheat production, which is one of the villagers' main sources of income. Due to the prolonged lack of rainfall and limited access to water, many farmers have struggled to maintain their crops, resulting in lower harvests and significant financial losses. As a result, many families are facing difficulties meeting their daily needs, while the village's economy has been negatively affected.",
+      "To address this issue, the local government has decided to allocate funding to improve agricultural productivity and strengthen the village's ability to cope with future droughts. However, due to limited financial resources, the government can only implement one development program over the next five years.",
+      'During a village council meeting, two proposals were introduced. The first focuses on improving water availability and irrigation systems to support existing wheat farms, while the second focuses on encouraging farmers to diversify their crops and adopt more drought-resistant agricultural practices.',
+      'The villagers have different opinions regarding these proposals. Some believe that protecting wheat production is essential for maintaining their traditional livelihoods, while others argue that diversifying agricultural activities would provide greater economic stability and reduce the risks associated with future droughts.'
+    ],
+    prompt: 'As a member of the village council, which of the following programs would you prefer to implement?',
+    options: {
+      A: 'Construct a new water reservoir and install irrigation systems across 200 hectares of farmland to improve water access and maintain wheat production during drought seasons.',
+      B: 'Provide 150 farming households with drought-resistant crop seeds, agricultural training, and financial assistance to encourage crop diversification and reduce dependence on wheat production.'
+    }
+  },
+  {
+    title: 'University Business Program',
+    paragraphs: [
+      'A business school at the University of Oregon has recently noticed a concerning decline in the sophistication and overall quality of the business models proposed by students for their final projects. After analyzing various factors, including students’ completion rates for assignments outside of class, academic performance, and changes in teaching methods, the professors concluded that the most significant contributing factor is the increase in class sizes over recent years.',
+      'As class sizes continue to grow, professors have less time to review individual students’ business models and provide detailed, constructive feedback. Consequently, many students struggle to identify weaknesses in their proposals, refine their business strategies, and develop more innovative and practical business models. This has raised concerns among faculty members about the quality of education and the students’ readiness for the competitive business environment after graduation.',
+      "To address this issue, the university administration has decided to allocate additional funding to improve the quality of students' final projects over the next three years. During a faculty meeting, two different proposals were introduced. Due to budget constraints, the university can only implement one of the proposed programs."
+    ],
+    prompt: "As a member of the university's academic committee, which of the following programs would you prefer to implement?",
+    options: {
+      A: 'Reduce the average class size from 60 to 30 students by hiring additional professors and introducing more class sections, allowing students to receive more personalized feedback throughout the development of their business models. Moreover, the existing class of 120 students will be split into two separate classes.',
+      B: 'Maintain the current class sizes while hiring 10 graduate teaching assistants, organizing weekly business model development workshops, and establishing a mentoring program that connects students with experienced business professionals to provide additional guidance and feedback. The existing class of 120 will be split into groups, ensuring that not more than 15 students will have a teaching assistant that they can directly get in touch with.'
+    }
+  },
+  {
+    title: 'Restaurant Improvement',
+    paragraphs: [
+      'Recently, a restaurant located along the Singapore River noticed a significant drop in its sales. If this trend continues, the restaurant might not be able to cover its rent this month. The manager investigated the reasons behind the decline and discovered that several new restaurants had recently opened nearby, offering similar dishes at more competitive prices. As a result, many customers, particularly tourists and young adults, have started dining at these newer establishments instead.',
+      "After analyzing customer feedback and sales records, the manager concluded that the restaurant's biggest challenge was its declining ability to attract customers in an increasingly competitive market. Although the restaurant has maintained its food quality and service standards, its relatively high prices and limited promotional activities have made it difficult to compete with other restaurants in the area.",
+      'To address this issue, the restaurant owner has decided to allocate an additional budget of $15,000 to improve sales and attract more customers over the next three months. During a management meeting, two different proposals were introduced. The first focuses on reducing menu prices and introducing promotional offers to attract price-sensitive customers, while the second focuses on improving the restaurant\'s dining experience and increasing its visibility through marketing campaigns.',
+      'Due to financial constraints, the restaurant can only implement one of the proposed programs.'
+    ],
+    prompt: 'As the restaurant manager, which of the following programs would you prefer to implement?',
+    options: {
+      A: 'Introduce a 20% discount on selected menu items and offer promotional meal packages for the next three months to attract more customers and increase sales volume, despite potentially reducing the profit earned from each meal. This is the option that is supported by most of the management team.',
+      B: 'Invest $15,000 in social media advertising, collaborations with local food influencers, and improvements to the restaurant\'s interior design to attract new customers and enhance the overall dining experience, while maintaining existing menu prices. This is supported by the front-of-house team.'
+    }
+  }
+];
+
+
+
+
+const root = document.getElementById('app');
+const STORE_KEY = 'sas_decision_study_session_v1';
+const IS_PREVIEW = window.EXPERIMENT_PREVIEW === true || window.location.pathname.endsWith('/preview.html');
+let study = null;
+let chosen = null;
+let busy = false;
+const fallbackData = new Map();
+const fallbackStorage = {
+  getItem(key) { return fallbackData.has(key) ? fallbackData.get(key) : null; },
+  setItem(key,value) { fallbackData.set(key,String(value)); },
+  removeItem(key) { fallbackData.delete(key); }
+};
+function usableStorage(kind) {
+  try { const storage = window[kind]; storage.getItem('__storage_check__'); return storage; }
+  catch { return fallbackStorage; }
+}
+const localStore = usableStorage('localStorage');
+const demoStore = usableStorage('sessionStorage');
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+const pList = arr => `<div class="body-copy">${arr.map(p => `<p>${escapeHtml(p)}</p>`).join('')}</div>`;
+
+function store(value) {
+  if (value) localStore.setItem(STORE_KEY, JSON.stringify(value));
+  else localStore.removeItem(STORE_KEY);
+}
+function stored() {
+  try {
+    const data = JSON.parse(localStore.getItem(STORE_KEY));
+    if (data && typeof data.id === 'string') return data;
+  } catch {}
+  return null;
+}
+async function api(action, body = null) {
+  if (IS_PREVIEW) return demoApi(action, body);
+  const res = await fetch(`/api/${action}`, {
+    method: body === null ? 'GET' : 'POST',
+    headers: body === null ? {} : {'Content-Type':'application/json'},
+    body: body === null ? undefined : JSON.stringify(body),
+    cache: 'no-store',
+    credentials: 'same-origin'
+  });
+  let result = {};
+  try { result = await res.json(); } catch {}
+  if (!res.ok) throw new Error(result.error || 'The server could not save your response. Please try again.');
+  return result;
+}
+function demoApi(action, body) {
+  const demoKey = 'sas_study_preview_state';
+  let item = JSON.parse(demoStore.getItem(demoKey) || 'null');
+  if (action === 'start') {
+    item = {id: 'demo-'+Date.now(), version:Math.random()<.5?'A':'B', step:0, answers:{}, completed:false};
+  } else if (action.startsWith('status')) {
+    if (!item) throw new Error('Preview session unavailable');
+  } else if (action === 'answer') {
+    if (!item || item.step !== body.step) throw new Error('This question was already answered.');
+    item.answers[body.step] = body.choice;
+    item.step += 1;
+    item.completed = item.step === 7;
+  } else if (action === 'withdraw') {
+    demoStore.removeItem(demoKey);
+    return Promise.resolve({deleted:true});
+  }
+  demoStore.setItem(demoKey, JSON.stringify(item));
+  return Promise.resolve(action === 'answer' ? {next_step:item.step, completed:item.completed} : item);
+}
+function previewBanner() {
+  return IS_PREVIEW ? `<div class="preview-banner"><strong>Preview mode:</strong> You can try the full questionnaire here, but answers are not sent to the researcher database. Version assignment is random in this preview only.</div>` : '';
+}
+function showError(message) {
+  const container = document.getElementById('error-slot');
+  if (container) container.innerHTML = `<div class="error-message" role="alert">${escapeHtml(message)}</div>`;
+}
+function renderConsent() {
+  root.innerHTML = `${previewBanner()}<article class="page-card">
+    <p class="eyebrow">SAS Psychology · Student research</p>
+    <h1 class="h1">A short study about everyday decisions.</h1>
+    <p class="lede">You'll read a series of fictional situations and choose the option you would prefer. There are no right or wrong answers.</p>
+    <div class="intro-stat-row">
+      <div class="intro-stat"><strong>7 choices</strong><small>One question per screen</small></div>
+      <div class="intro-stat"><strong>About 10 minutes</strong><small>Read at your own pace</small></div>
+      <div class="intro-stat"><strong>Anonymous</strong><small>No student names or emails</small></div>
+    </div>
+    <div class="notice">
+      <strong>Before you begin</strong>
+      Participation is voluntary. You can stop at any point, and you can request removal of your responses using this device while your study session is available. Your choices are used only for a school psychology project and are shown to researchers without your name or email. Some questions discuss school activities, money or environmental challenges. This study may be completed only with school approval and any required student/guardian consent.
+    </div>
+    <label class="consent-check"><input id="consent" type="checkbox" /> <span>I have read the information above and voluntarily agree to participate.</span></label>
+    <div id="error-slot"></div>
+    <div class="actions"><span class="mini-note">You may close this page if you do not wish to participate.</span><button class="btn" id="begin" disabled>Begin questionnaire <span aria-hidden="true">→</span></button></div>
+  </article>`;
+  const checked = document.getElementById('consent');
+  const button = document.getElementById('begin');
+  checked.addEventListener('change', () => {button.disabled = !checked.checked;});
+  button.addEventListener('click', async () => {
+    if (busy || !checked.checked) return;
+    busy = true; button.disabled = true; button.textContent = 'Starting…';
+    try {
+      study = await api('start', {consent:true});
+      store({id:study.id});
+      renderQuestion();
+    } catch (e) { showError(e.message); button.textContent = 'Begin questionnaire →'; button.disabled = false; }
+    finally { busy = false; }
+  });
+}
+function questionData() {
+  const step = study.step;
+  if (step === 0 || step === 6) {
+    const first = step === 0;
+    const scenario = first ? scenario1 : scenario2;
+    const frame = first ? (study.version === 'A'?'positive':'negative') : (study.version === 'A'?'negative':'positive');
+    return {title:scenario.title, paragraphs:scenario.paragraphs, options:scenario[frame],
+      prompt:'Which plan would you choose?', label:first?'Situation 1':'Situation 2'};
+  }
+  const d = distractions[step-1];
+  return {title:d.title, paragraphs:d.paragraphs, options:d.options, prompt:d.prompt, label:`Question ${step+1}`};
+}
+function renderQuestion() {
+  if (study.step >= 7) { renderDebrief(); return; }
+  chosen = null;
+  const q = questionData();
+  root.innerHTML = `${previewBanner()}<article class="page-card">
+    <div class="progress-head"><div class="progress-row"><span>Decision questionnaire</span><span>${study.step+1} of 7</span></div>
+       <div class="progress-track" aria-hidden="true"><div class="progress-fill" style="width:${(study.step+1)/7*100}%"></div></div></div>
+    <p class="eyebrow">${escapeHtml(q.label)}</p>
+    <h1 class="question-title">${escapeHtml(q.title)}</h1>
+    ${pList(q.paragraphs)}
+    <div class="prompt">${escapeHtml(q.prompt)}</div>
+    <div class="option-list" role="group" aria-label="Choose one answer">
+      ${['A','B'].map(key => `<button type="button" class="option" data-choice="${key}" aria-pressed="false"><span class="option-key">${key}</span><span class="option-text">${escapeHtml(q.options[key])}</span></button>`).join('')}
+    </div>
+    <div id="error-slot"></div>
+    <div class="actions"><button type="button" class="link-button" id="withdraw">Stop participating</button><button type="button" class="btn" id="continue" disabled>${study.step===6?'Submit answers':'Continue'} <span aria-hidden="true">→</span></button></div>
+    <p class="mini-note">Select one option to continue. You cannot return to previous questions after continuing.</p>
+  </article>`;
+  const buttons = [...root.querySelectorAll('[data-choice]')];
+  const next = document.getElementById('continue');
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    if (busy) return;
+    chosen = btn.dataset.choice;
+    buttons.forEach(b => {b.classList.toggle('selected',b===btn);b.setAttribute('aria-pressed',b===btn?'true':'false');});
+    next.disabled = false;
+  }));
+  next.addEventListener('click', async () => {
+    if (busy || !chosen) return;
+    busy=true; next.disabled=true; next.textContent='Saving…';
+    try {
+      const reply=await api('answer',{id:study.id,step:study.step,choice:chosen});
+      study.step=reply.next_step;
+      if (reply.completed) {study.completed=true;renderDebrief();}
+      else renderQuestion();
+      window.scrollTo({top:0,behavior:'instant'});
+    } catch(e) {
+      showError(e.message); next.disabled=false; next.textContent=study.step===6?'Submit answers →':'Continue →';
+    } finally {busy=false;}
+  });
+  document.getElementById('withdraw').addEventListener('click', confirmWithdrawal);
+}
+async function confirmWithdrawal() {
+  if (busy) return;
+  if (!window.confirm('Stop participating and delete the responses saved in this study session?')) return;
+  busy=true;
+  try {
+    await api('withdraw',{id:study.id});
+    study=null;store(null);
+    root.innerHTML=`<article class="page-card"><div class="success-icon">✓</div><h1 class="h1">Your session was removed.</h1><p class="lede">Thank you. Your recorded responses for this session have been deleted.</p><div class="actions"><button class="btn ghost" id="restart">Return to start</button></div></article>`;
+    document.getElementById('restart').addEventListener('click', renderConsent);
+  } catch(e) {showError(e.message);} finally{busy=false;}
+}
+function renderDebrief() {
+  root.innerHTML=`${previewBanner()}<article class="page-card">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">Questionnaire complete</p>
+    <h1 class="h1">Thank you for taking part.</h1>
+    <p class="lede">Your responses have ${IS_PREVIEW?'not been submitted because this is preview mode':'been recorded anonymously'}.</p>
+    <div class="notice"><strong>About this study</strong>
+      This psychology investigation examines the <strong>framing effect</strong>: whether describing similar outcomes in terms of what is gained or what is lost can influence people's choices. The two school-related scenarios were presented using different wording across participant groups. The additional questions were included to make the focus of the study less obvious until debriefing. You were not told the full hypothesis beforehand to avoid influencing your answers.
+    </div>
+    <p class="body-copy">If you have concerns or questions, please speak with the supervising Psychology teacher or student researchers.</p>
+    <div id="error-slot"></div>
+    <div class="actions"><button type="button" id="withdraw" class="link-button">Request withdrawal of my session's responses</button><span class="mini-note">You may now close this page.</span></div>
+  </article>`;
+  document.getElementById('withdraw').addEventListener('click',confirmWithdrawal);
+}
+async function boot() {
+  const saved=stored();
+  if (!saved) {renderConsent();return;}
+  try {
+    const status=await api(`status?id=${encodeURIComponent(saved.id)}`);
+    study={id:saved.id,...status};
+    if(study.completed||study.step===7) renderDebrief();
+    else renderQuestion();
+  } catch {store(null);renderConsent();}
+}
+boot();
+
+  </script>
+</body>
+</html>

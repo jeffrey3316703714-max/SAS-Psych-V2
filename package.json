@@ -1,0 +1,12 @@
+{
+  "name": "sas-psychology-framing-study",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Anonymous counterbalanced framing experiment with a secure researcher dashboard",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "dev": "npx netlify dev"
+  },
+  "engines": { "node": ">=20" }
+}
